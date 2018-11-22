@@ -33,16 +33,36 @@
 
 - (void)setupSubViews
 {
-    CGReverseTableView *tableView = [[CGReverseTableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    CGRect frame = self.view.bounds;
+    frame.size.height -= 40;
+    CGReverseTableView *tableView = [[CGReverseTableView alloc]initWithFrame:frame style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
     tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
+        [tableView.mj_header endRefreshing];
     }];
-    [tableView.mj_header beginRefreshing];
+    
+    
+    UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 40)];
+    header.backgroundColor = [UIColor redColor];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:header.bounds];
+    titleLabel.text = [NSString stringWithFormat:@"tableHeaderView"];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [UIColor whiteColor];
+    [header addSubview:titleLabel];
+    tableView.tableHeaderView = header;
+    
+    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 40)];
+    footer.backgroundColor = [UIColor redColor];
+    UILabel *footerLabel = [[UILabel alloc]initWithFrame:footer.bounds];
+    footerLabel.text = [NSString stringWithFormat:@"tableFooterView"];
+    footerLabel.textAlignment = NSTextAlignmentCenter;
+    footerLabel.textColor = [UIColor whiteColor];
+    [footer addSubview:footerLabel];
+    tableView.tableFooterView = footer;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -52,23 +72,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 5;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 40;
-//}
-//
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 40)];
-//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:footer.bounds];
-//    titleLabel.text = [NSString stringWithFormat:@"  footer%ld",section];
-//    [footer addSubview:titleLabel];
-//
-//    return footer;
-//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

@@ -76,6 +76,8 @@
     self.transform = CGAffineTransformMakeScale (1,-1);
 }
 
+#pragma mark - public methods
+
 - (void)addSubview:(UIView *)view
 {
     [super addSubview:view];
