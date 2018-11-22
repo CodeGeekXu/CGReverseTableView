@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'CGReverseTableView_Example' do
+  pod 'CGReverseTableView', :path => '../'
+
+  target 'CGReverseTableView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
