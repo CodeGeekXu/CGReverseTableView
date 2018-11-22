@@ -13,6 +13,7 @@
 @interface CGViewController ()<CGReverseTableViewDataSource, CGReverseTableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet CGReverseTableView *tableView;
+@property (nonatomic, assign) NSInteger sections;
 
 @end
 
@@ -40,7 +41,14 @@
     
     __weak typeof(self) weakSelf = self;
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.sections = 1;
         [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView reloadData];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.sections ++;
+        [weakSelf.tableView.mj_footer endRefreshing];
+        [weakSelf.tableView reloadData];
     }];
     
     UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.bounds), 40)];
@@ -64,7 +72,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+    return self.sections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
