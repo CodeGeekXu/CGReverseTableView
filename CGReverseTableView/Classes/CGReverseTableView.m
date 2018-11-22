@@ -24,7 +24,7 @@
 {
     self = [super init];
     if (self) {
-        self.transform = CGAffineTransformMakeScale (1,-1);
+        [self setup];
     }
     return self;
 }
@@ -73,45 +73,56 @@
 
 - (void)setup
 {
-    self.transform = CGAffineTransformMakeScale (1,-1);
+    [self transformWithView:self];
+}
+
+- (void)transformWithView:(UIView *)view
+{
+    if (!CGAffineTransformEqualToTransform(view.transform, CGAffineTransformMakeScale (1,-1))) {
+        view.transform = CGAffineTransformMakeScale (1,-1);
+    }
 }
 
 #pragma mark - public methods
+
+- (void)setTableHeaderView:(UIView *)tableHeaderView
+{
+    [super setTableHeaderView:tableHeaderView];
+    [self transformWithView:tableHeaderView];
+}
+
+- (void)setTableFooterView:(UIView *)tableFooterView
+{
+    [super setTableFooterView:tableFooterView];
+    [self transformWithView:tableFooterView];
+}
 
 - (void)addSubview:(UIView *)view
 {
     [super addSubview:view];
     
-    if (!CGAffineTransformEqualToTransform(view.transform, CGAffineTransformMakeScale (1,-1))) {
-        view.transform = CGAffineTransformMakeScale (1,-1);
-    }
+    [self transformWithView:view];
 }
 
 - (void)insertSubview:(UIView *)view atIndex:(NSInteger)index
 {
     [super insertSubview:view atIndex:index];
     
-    if (!CGAffineTransformEqualToTransform(view.transform, CGAffineTransformMakeScale (1,-1))) {
-        view.transform = CGAffineTransformMakeScale (1,-1);
-    }
+    [self transformWithView:view];
 }
 
 - (void)insertSubview:(UIView *)view aboveSubview:(UIView *)siblingSubview
 {
     [super insertSubview:view aboveSubview:siblingSubview];
     
-    if (!CGAffineTransformEqualToTransform(view.transform, CGAffineTransformMakeScale (1,-1))) {
-        view.transform = CGAffineTransformMakeScale (1,-1);
-    }
+    [self transformWithView:view];
 }
 
 - (void)insertSubview:(UIView *)view belowSubview:(UIView *)siblingSubview
 {
     [super insertSubview:view belowSubview:siblingSubview];
     
-    if (!CGAffineTransformEqualToTransform(view.transform, CGAffineTransformMakeScale (1,-1))) {
-        view.transform = CGAffineTransformMakeScale (1,-1);
-    }
+    [self transformWithView:view];
 }
 
 #pragma mark - UITableViewDelegate
@@ -120,9 +131,7 @@
 {
     if ([self.reverseDelegate respondsToSelector:@selector(tableView:viewForHeaderInSection:)]) {
         UIView *header = [self.reverseDelegate tableView:tableView viewForHeaderInSection:section];
-        if (!CGAffineTransformEqualToTransform(header.transform, CGAffineTransformMakeScale (1,-1))) {
-            header.transform = CGAffineTransformMakeScale (1,-1);
-        }
+        [self transformWithView:header];
         return header;
     }
     
@@ -133,9 +142,7 @@
 {
     if ([self.reverseDelegate respondsToSelector:@selector(tableView:viewForFooterInSection:)]) {
         UIView *footer = [self.reverseDelegate tableView:tableView viewForFooterInSection:section];
-        if (!CGAffineTransformEqualToTransform(footer.transform, CGAffineTransformMakeScale (1,-1))) {
-            footer.transform = CGAffineTransformMakeScale (1,-1);
-        }
+        [self transformWithView:footer];
         return footer;
     }
     
