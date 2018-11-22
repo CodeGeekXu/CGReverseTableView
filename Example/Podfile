@@ -2,7 +2,8 @@ use_frameworks!
 
 target 'CGReverseTableView_Example' do
   pod 'CGReverseTableView', :path => '../'
-
+  pod 'MJRefresh', '~> 3.1.15.3'
+  
   target 'CGReverseTableView_Tests' do
     inherit! :search_paths
 
