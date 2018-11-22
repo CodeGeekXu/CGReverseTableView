@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'CGReverseTableView'
   s.version          = '0.1.0'
-  s.summary          = 'A tableview refreshed from the bottom to top,just like WeChat.类似于微信聊天页面一样从底部开始反向刷新的tableView.'
+  s.summary          = 'A tableview refreshed from the bottom to top,just like WeChat.类似于微信聊天页面一样从底部开始刷新的tableView.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
